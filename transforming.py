@@ -5,7 +5,7 @@ import glob
 import datetime
 
 
-
+# TODO: refactor these 2 functions
 def lat_from_address(row):
     from pygeocoder import Geocoder
     lat, lon = Geocoder.geocode(row['Address']).coordinates
@@ -56,17 +56,12 @@ def get_proper_test_set(foldername):
     rootDir = '.'
     for dirName, subdirList, fileList in os.walk(rootDir):
         if foldername == dirName[-10:]:
-            #for name in fileList:
-            #    print(os.path.join(dirName, name))
             print "Found", foldername
             fname = os.path.join(dirName,'part-r-00000')
-            result = read_table(fname , names=["id", "hour", "amount", "lat1", #header=0,
+            result = read_table(fname , names=["id", "hour", "amount", "lat1",
                                             "lon1", "lat2", "lon2", "lat3", "lon3"])
- # test_igor | part-r-00000
             return result
-
-    return -1
-
+	return -1
 
 def get_amount(row):
     total = get_amount_by_loc(get_proper_test_set(row['Datetime'].strftime("%Y-%m-%d")), row['Lat'],
